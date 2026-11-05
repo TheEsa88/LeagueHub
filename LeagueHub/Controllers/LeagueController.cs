@@ -100,6 +100,30 @@ public class LeagueController : ControllerBase
         return Ok(match);
     }
 
+    [HttpDelete("matches/{id}")]
+    public IActionResult CancelMatch(int id)
+    {
+        Match? match = _matches.FirstOrDefault(m => m.Id == id);
+
+        if (match == null)
+        {
+            return NotFound("Ottelua ei löydy.");
+        }
+
+        if (match.HomeGoals is not null)
+        {
+            return BadRequest("Tuloksellista ottelua ei voi perua.");
+        }
+
+        if (match.ScheduledAt <= DateTime.UtcNow)
+        {
+            return BadRequest("Alkanutta ottelua ei voi perua.");
+        }
+
+        _matches.Remove(match);
+        return NoContent();
+    }
+
     [HttpGet("standings")]
     public IActionResult GetStandings()
     {
