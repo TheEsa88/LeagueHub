@@ -1,3 +1,4 @@
 <Solution>
+  <Project Path="LeagueHub.Tests/LeagueHub.Tests.csproj" />
   <Project Path="LeagueHub/LeagueHub.csproj" />
 </Solution>
