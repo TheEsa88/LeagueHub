@@ -1,23 +1,26 @@
-var builder = WebApplication.CreateBuilder(args);
+using LeagueHub.Repositories;
+using LeagueHub.Services;
 
-// Add services to the container.
+WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
-var app = builder.Build();
+builder.Services.AddSingleton<ITeamRepository, InMemoryTeamRepository>();
+builder.Services.AddSingleton<IMatchRepository, InMemoryMatchRepository>();
+builder.Services.AddScoped<ITeamService, TeamService>();
+builder.Services.AddScoped<IMatchService, MatchService>();
 
-// Configure the HTTP request pipeline.
+WebApplication app = builder.Build();
+
 if (app.Environment.IsDevelopment())
 {
-    app.MapOpenApi();
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
 
 app.UseHttpsRedirection();
-
-app.UseAuthorization();
-
 app.MapControllers();
 
 app.Run();
