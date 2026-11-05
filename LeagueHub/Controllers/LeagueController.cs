@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using LeagueHub.Models;
 
 namespace LeagueHub.Controllers;
 
@@ -180,28 +181,4 @@ public class LeagueController : ControllerBase
 
         return Ok(rows.OrderByDescending(r => ((dynamic)r).Points));
     }
-}
-
-public class Team
-{
-    public int Id { get; set; }
-    public string Name { get; set; } = string.Empty;
-    public string City { get; set; } = string.Empty;
-    public int MaxRoster { get; set; }
-}
-
-public class Match
-{
-    public int Id { get; set; }
-    public int HomeTeamId { get; set; }
-    public int AwayTeamId { get; set; }
-    public DateTime ScheduledAt { get; set; }
-    public int? HomeGoals { get; set; }
-    public int? AwayGoals { get; set; }
-}
-
-public class ResultRequest
-{
-    public int HomeGoals { get; set; }
-    public int AwayGoals { get; set; }
 }
